@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5370737475364171206}
   - component: {fileID: 3926995483756429250}
   - component: {fileID: 1499970770442318774}
-  - component: {fileID: 114991002724463680}
   m_Layer: 0
   m_Name: sheep
   m_TagString: Untagged
@@ -84,17 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &114991002724463680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026991542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4469ac67ff3061c479684de41beb92d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sheepSpeed: 1
-  _zLimit: 50
