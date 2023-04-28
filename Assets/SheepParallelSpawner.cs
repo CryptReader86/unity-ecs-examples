@@ -4,17 +4,31 @@ using Unity.Jobs;
 
 public class SheepParallelSpawner : MonoBehaviour
 {
+    private struct SheepMoveJob : IJobParallelForTransform
+    {
+        private const float ZLimit = 50.0f;
+
+        private const float SheepSpeed = 1.0f;
+        private static readonly Vector3 SheepForward = Vector3.forward;
+
+        public void Execute(int index, TransformAccess transform)
+        {
+            transform.position += SheepSpeed * Time.deltaTime * SheepForward;
+
+            var position = transform.position;
+            if (position.z >= ZLimit)
+            {
+                position.z = -ZLimit;
+                transform.position = position;
+            }
+        }
+    }
+
     [SerializeField]
     private GameObject _sheepPrefab;
 
     [SerializeField]
     private int _sheepsToSpawn;
-
-    [SerializeField]
-    private float _sheepSpeed;
-
-    [SerializeField]
-    private float _zLimit;
 
     private GameObject[] _sheeps;
 
@@ -30,6 +44,7 @@ public class SheepParallelSpawner : MonoBehaviour
         }
     }
 
+    /*
     private void Update()
     {
         foreach(var sheep in _sheeps)
@@ -46,4 +61,5 @@ public class SheepParallelSpawner : MonoBehaviour
             }
         }
     }
+    */
 }
