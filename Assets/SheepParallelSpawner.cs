@@ -8,12 +8,12 @@ public class SheepParallelSpawner : MonoBehaviour
     {
         private const float ZLimit = 50.0f;
 
-        private const float SheepSpeed = 1.0f;
+        private const float SheepSpeed = 0.1f;
         private static readonly Vector3 SheepForward = Vector3.forward;
 
         public void Execute(int index, TransformAccess transform)
         {
-            transform.position += SheepSpeed * Time.deltaTime * SheepForward;
+            transform.position += SheepSpeed * SheepForward;
 
             var position = transform.position;
             if (position.z >= ZLimit)
@@ -30,36 +30,37 @@ public class SheepParallelSpawner : MonoBehaviour
     [SerializeField]
     private int _sheepsToSpawn;
 
-    private GameObject[] _sheeps;
+    private SheepMoveJob _sheepMoveJob;
+    private JobHandle _sheepMoveJobHandle;
+    private TransformAccessArray _sheepTransforms;
 
     void Start()
     {
-        _sheeps = new GameObject[_sheepsToSpawn];
+        var sheepTransforms = new Transform[_sheepsToSpawn];
 
         for (var i = 0; i < _sheepsToSpawn; i++)
         {
             var sheepPosition = new Vector3(Random.Range(-50.0f, 50.0f), 0, Random.Range(-50.0f, 50.0f));
 
-            _sheeps[i] = Instantiate(_sheepPrefab, sheepPosition, Quaternion.identity);
+            sheepTransforms[i] = Instantiate(_sheepPrefab, sheepPosition, Quaternion.identity).transform;
         }
+
+        _sheepTransforms = new TransformAccessArray(sheepTransforms);
     }
 
-    /*
     private void Update()
     {
-        foreach(var sheep in _sheeps)
-        {
-            var sheepTransform = sheep.transform;
-
-            sheepTransform.Translate(_sheepSpeed * Time.deltaTime * transform.forward);
-
-            var position = sheepTransform.position;
-            if (position.z >= _zLimit)
-            {
-                position.z = -_zLimit;
-                sheepTransform.position = position;
-            }
-        }
+        _sheepMoveJob = new SheepMoveJob { };
+        _sheepMoveJobHandle = _sheepMoveJob.Schedule(_sheepTransforms);
     }
-    */
+
+    private void LateUpdate()
+    {
+        _sheepMoveJobHandle.Complete();
+    }
+
+    private void OnDestroy()
+    {
+        _sheepTransforms.Dispose();
+    }
 }
