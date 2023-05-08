@@ -23,7 +23,7 @@ public class ECSManager : MonoBehaviour
         for (var i = 0; i < _numSheep; i++)
         {
             var sheep = _entityManager.Instantiate(prefab);
-            var sheepPosition = new float3(UnityEngine.Random.Range(-50.0f, 50.0f), 0, UnityEngine.Random.Range(-50.0f, 50.0f));
+            var sheepPosition = new float3(UnityEngine.Random.Range(-50.0f, 50.0f), UnityEngine.Random.Range(0.0f, 50.0f), UnityEngine.Random.Range(-50.0f, 50.0f));
 
             _entityManager.SetComponentData(sheep, new Translation { Value = sheepPosition });
             _entityManager.SetComponentData(sheep, new Rotation { Value = new quaternion(0, 0, 0, 0) });
