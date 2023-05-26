@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Rendering;
+using UnityEngine;
 
 public class CreateCapsuleSystem : JobComponentSystem
 {
@@ -11,13 +12,19 @@ public class CreateCapsuleSystem : JobComponentSystem
         base.OnCreate();
 
         var entity = EntityManager.CreateEntity(
-                ComponentType.ReadWrite<Translation>(),
-                ComponentType.ReadWrite<Rotation>(),
+                ComponentType.ReadOnly<LocalToWorld>(),
                 ComponentType.ReadOnly<RenderMesh>()
             );
 
-        EntityManager.SetComponentData(entity, new Translation { Value = float3.zero });
-        EntityManager.SetComponentData(entity, new Rotation { Value = quaternion.identity });
+        EntityManager.SetComponentData(entity, new LocalToWorld { Value = float4x4.identity });
+
+        var resourceHolder = Resources.Load<ResourceHolder>("ResourceHolder");
+
+        EntityManager.SetSharedComponentData(entity, new RenderMesh
+        {
+            mesh = resourceHolder.theMesh,
+            material = resourceHolder.theMaterial
+        });
     }
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)

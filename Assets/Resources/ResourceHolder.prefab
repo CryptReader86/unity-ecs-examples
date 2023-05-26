@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a8ebfdfd5c44340a13c589a61b26db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _theMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  _theMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  theMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  theMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}

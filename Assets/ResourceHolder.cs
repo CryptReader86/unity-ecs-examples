@@ -2,6 +2,6 @@
 
 public class ResourceHolder : MonoBehaviour
 {
-    [SerializeField] private Mesh _theMesh;
-    [SerializeField] private Material _theMaterial;
+    public Mesh theMesh;
+    public Material theMaterial;
 }
