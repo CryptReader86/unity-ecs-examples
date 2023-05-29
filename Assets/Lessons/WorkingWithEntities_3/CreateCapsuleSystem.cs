@@ -1,4 +1,5 @@
-﻿using Unity.Jobs;
+﻿/*
+using Unity.Jobs;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -32,3 +33,4 @@ public class CreateCapsuleSystem : JobComponentSystem
         return inputDeps;
     }
 }
+*/
