@@ -1,4 +1,5 @@
-﻿using Unity.Jobs;
+﻿/*
+using Unity.Jobs;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -43,3 +44,4 @@ public class CreateSheepSystem : JobComponentSystem
         return inputDeps;
     }
 }
+*/
