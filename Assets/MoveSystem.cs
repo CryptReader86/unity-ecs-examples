@@ -10,7 +10,7 @@ public class MoveSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        var speed = 5.0f;
+        var speed = 1.0f;
         var deltaTime = Time.DeltaTime;
         var targetLocation = new float3(5, 5, 5);
 
@@ -18,7 +18,10 @@ public class MoveSystem : JobComponentSystem
                .WithName("MoveSystem")
                .ForEach((ref Translation position, ref Rotation rotation, ref TankData tankData) =>
                {
-                   position.Value += deltaTime * speed * math.normalize(targetLocation - position.Value);
+                   var direction = math.normalize(targetLocation - position.Value);
+
+                   rotation.Value = quaternion.LookRotation(direction, Vector3.up);
+                   position.Value += deltaTime * speed * direction;
                })
                .Schedule(inputDeps);
 
