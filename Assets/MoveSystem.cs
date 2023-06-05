@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -10,20 +8,17 @@ public class MoveSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        var speed = 1.0f;
-        var rotationSpeed = 0.5f;
+        var speed = 5.0f;
         var deltaTime = Time.DeltaTime;
-        var targetLocation = new float3(5, 0, 5);
+        var targetLocation = float3.zero;
 
         var jobHandle = Entities
                .WithName("MoveSystem")
-               .ForEach((ref Translation position, ref Rotation rotation, ref TankData tankData) =>
+               .ForEach((ref Translation position) =>
                {
-                   var directionVector = targetLocation - position.Value;
-                   var directionQuaternion = quaternion.LookRotation(directionVector, Vector3.up);
-
-                   rotation.Value = math.slerp(rotation.Value, directionQuaternion, deltaTime * rotationSpeed);
-                   position.Value += deltaTime * speed * math.normalize(directionVector);
+                   var pivot = targetLocation;
+                   var rotationSpeed = speed * deltaTime * (1 / math.distance(position.Value, pivot));
+                   position.Value = math.mul(quaternion.AxisAngle(Vector3.up, rotationSpeed), position.Value - pivot) + pivot;
                })
                .Schedule(inputDeps);
 
