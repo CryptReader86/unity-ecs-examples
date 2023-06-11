@@ -1,30 +1,27 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Unity.Mathematics;
+using Unity.Collections;
 
 public class GameDataManager : MonoBehaviour
 {
-    [SerializeField] private Transform _player;
-    [SerializeField] private Transform[] _waypoints;
-
-    private float3[] _waypointsArray;
-
     public static GameDataManager instance;
+    public Transform[] waypoints;
+    public float3[] wps;
 
-    public Transform Player => _player;
-
-    public float3[] WaypointsArray => _waypointsArray;
-
-    private void Awake()
+    void Awake()
     {
         if (instance != null && instance != this)
             Destroy(gameObject);
         else
             instance = this;
 
-        _waypointsArray = new float3[_waypoints.Length];
-        for (var i = 0; i < _waypoints.Length; i++)
+        wps = new float3[waypoints.Length];
+        for (int i = 0; i < waypoints.Length; i++)
         {
-            _waypointsArray[i] = _waypoints[i].position;
+            wps[i] = waypoints[i].position;
         }
+       
     }
 }

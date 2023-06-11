@@ -8,17 +8,17 @@ using Unity.Transforms;
 public class ECSManager : MonoBehaviour
 {
     EntityManager manager;
-    public GameObject tankPrefab;
-    const int numTanks = 500;
+    public GameObject shipPrefab;
+    const int numShips = 1000;
 
     // Start is called before the first frame update
     void Start()
     {
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
-        var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(tankPrefab, settings);
+        var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(shipPrefab, settings);
 
-        for (int i = 0; i < numTanks; i++)
+        for (int i = 0; i < numShips; i++)
         {
             var instance = manager.Instantiate(prefab);
             float x = UnityEngine.Random.Range(-100, 100);
@@ -29,7 +29,10 @@ public class ECSManager : MonoBehaviour
             var q = Quaternion.Euler(new Vector3(0, 45, 0));
             manager.SetComponentData(instance, new Rotation { Value = new quaternion(q.x,q.y,q.z,q.w) });
 
-            manager.SetComponentData(instance, new TankData { speed = UnityEngine.Random.Range(2.0f, 5.0f), rotationSpeed = UnityEngine.Random.Range(2.0f, 5.0f) });
+            manager.SetComponentData(instance, new ShipData { speed = UnityEngine.Random.Range(5, 20),
+                rotationSpeed = UnityEngine.Random.Range(3.0f, 5.0f),
+                currentWP = 0
+            });
         }
 
     }

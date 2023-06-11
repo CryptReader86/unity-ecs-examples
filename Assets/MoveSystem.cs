@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Jobs;
@@ -10,23 +9,22 @@ public class MoveSystem : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         float deltaTime = Time.DeltaTime;
-        var waypoints = new NativeArray<float3>(GameDataManager.instance.WaypointsArray, Allocator.TempJob);
+        var waypoints = new NativeArray<float3>(GameDataManager.instance.wps, Allocator.TempJob);
         var jobHandle = Entities
                .WithName("MoveSystem")
-               .ForEach((ref Translation position, ref Rotation rotation, ref TankData tankData) =>
+               .ForEach((ref Translation position, ref Rotation rotation, ref ShipData shipData) =>
                {
-                   float3 heading = waypoints[tankData.currentWaipoint] - position.Value;
-                   heading.y = 0;
+                   float3 heading = waypoints[shipData.currentWP] - position.Value;
                    quaternion targetDirection = quaternion.LookRotation(heading, math.up());
-                   rotation.Value = math.slerp(rotation.Value, targetDirection, deltaTime * tankData.rotationSpeed);
-                   position.Value += deltaTime * tankData.speed * math.forward(rotation.Value);
+                   rotation.Value = math.slerp(rotation.Value, targetDirection, deltaTime * shipData.rotationSpeed);
+                   position.Value += deltaTime * shipData.speed * math.forward(rotation.Value);
 
-                   if(math.distance(position.Value, waypoints[tankData.currentWaipoint]) < 1)
+                   if(math.distance(position.Value, waypoints[shipData.currentWP]) < 10)
                    {
-                       tankData.currentWaipoint++;
-                       if(tankData.currentWaipoint >= waypoints.Length)
+                       shipData.currentWP++;
+                       if(shipData.currentWP >= waypoints.Length)
                        {
-                           tankData.currentWaipoint = 0;
+                           shipData.currentWP = 0;
                        }
                    }
                })
