@@ -18,15 +18,6 @@ public class MoveSystem : JobComponentSystem
                    quaternion targetDirection = quaternion.LookRotation(heading, math.up());
                    rotation.Value = math.slerp(rotation.Value, targetDirection, deltaTime * shipData.rotationSpeed);
                    position.Value += deltaTime * shipData.speed * math.forward(rotation.Value);
-
-                   if(math.distance(position.Value, waypoints[shipData.currentWP]) < 10)
-                   {
-                       shipData.currentWP++;
-                       if(shipData.currentWP >= waypoints.Length)
-                       {
-                           shipData.currentWP = 0;
-                       }
-                   }
                })
                .Schedule(inputDeps);
 
