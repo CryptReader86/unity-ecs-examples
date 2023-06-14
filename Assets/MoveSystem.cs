@@ -14,7 +14,18 @@ public class MoveSystem : JobComponentSystem
                .WithName("MoveSystem")
                .ForEach((ref Translation position, ref Rotation rotation, ref ShipData shipData) =>
                {
-                   float3 heading = waypoints[shipData.currentWP] - position.Value;
+                   var distance = math.distance(position.Value, waypoints[shipData.currentWP]);
+                   if(distance < 60)
+                   {
+                       shipData.approach = false;
+                   }
+                   else if (distance > 300)
+                   {
+                       shipData.approach = true;
+                   }
+
+                   var heading = (shipData.approach ? 1 : -1) * waypoints[shipData.currentWP] - position.Value;
+
                    quaternion targetDirection = quaternion.LookRotation(heading, math.up());
                    rotation.Value = math.slerp(rotation.Value, targetDirection, deltaTime * shipData.rotationSpeed);
                    position.Value += deltaTime * shipData.speed * math.forward(rotation.Value);
