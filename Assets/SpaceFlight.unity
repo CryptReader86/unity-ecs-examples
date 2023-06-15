@@ -381,7 +381,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.663e-42, y: 1.01e-43, z: 980710.94, w: 0}
+  m_BoundingSphereOverride: {x: 3.0092666e-36, y: 1.009742e-28, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -429,6 +429,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 1332995063531719171, guid: ea769d329dd5e43ce92729fda9cf7c3a,
+    type: 3}
+  bulletPrefab: {fileID: 1985617182649990460, guid: a2db5607c80d0164c895e8a6e4067973,
     type: 3}
 --- !u!4 &887675327
 Transform:

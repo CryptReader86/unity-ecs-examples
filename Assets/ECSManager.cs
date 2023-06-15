@@ -9,6 +9,7 @@ public class ECSManager : MonoBehaviour
 {
     EntityManager manager;
     public GameObject shipPrefab;
+    public GameObject bulletPrefab;
     const int numShips = 500;
 
     void Start()
@@ -16,6 +17,7 @@ public class ECSManager : MonoBehaviour
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
         var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(shipPrefab, settings);
+        var bullet = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletPrefab, settings);
 
         for (int i = 0; i < numShips; i++)
         {
@@ -43,7 +45,8 @@ public class ECSManager : MonoBehaviour
 
             manager.SetComponentData(instance, new ShipData { speed = UnityEngine.Random.Range(5, 20),
                 rotationSpeed = UnityEngine.Random.Range(3, 5),
-                currentWP = closestWP
+                currentWP = closestWP,
+                bulletPrefab = bullet
             });
         }
 
