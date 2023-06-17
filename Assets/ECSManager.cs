@@ -19,6 +19,19 @@ public class ECSManager : MonoBehaviour
         var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(shipPrefab, settings);
         var bullet = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletPrefab, settings);
 
+        var bulletSpawnPoints = new List<GameObject>();
+        foreach(Transform shipObject in shipPrefab.transform)
+        {
+            if (shipObject.CompareTag("BulletSpawnPoint"))
+                bulletSpawnPoints.Add(shipObject.gameObject);
+        }
+
+        GameDataManager.instance.gunLocations = new float3[bulletSpawnPoints.Count];
+        for(var i = 0; i < bulletSpawnPoints.Count; i++)
+        {
+            GameDataManager.instance.gunLocations[i] = bulletSpawnPoints[i].transform.position;
+        }
+
         for (int i = 0; i < numShips; i++)
         {
             var instance = manager.Instantiate(prefab);
