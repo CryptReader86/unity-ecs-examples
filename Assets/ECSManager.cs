@@ -29,7 +29,7 @@ public class ECSManager : MonoBehaviour
         GameDataManager.instance.gunLocations = new float3[bulletSpawnPoints.Count];
         for(var i = 0; i < bulletSpawnPoints.Count; i++)
         {
-            GameDataManager.instance.gunLocations[i] = bulletSpawnPoints[i].transform.position;
+            GameDataManager.instance.gunLocations[i] = bulletSpawnPoints[i].transform.TransformPoint(bulletSpawnPoints[i].transform.position);
         }
 
         for (int i = 0; i < numShips; i++)
