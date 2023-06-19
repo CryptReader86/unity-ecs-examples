@@ -10,7 +10,7 @@ public class ECSManager : MonoBehaviour
     EntityManager manager;
     public GameObject shipPrefab;
     public GameObject bulletPrefab;
-    const int numShips = 500;
+    const int numShips = 100;
 
     void Start()
     {
