@@ -13,12 +13,20 @@ public class ShootSystem : JobComponentSystem
         Entities.WithoutBurst().WithStructuralChanges()
             .ForEach((Entity entity, ref Translation position, ref Rotation rotation, ref ShipData shipData) =>
             {
-                foreach(var gunLocation in gunLocations)
+                var directionToTarget = GameDataManager.instance.wps[shipData.currentWP] - position.Value;
+                var forwardDirection = math.forward(rotation.Value);
+
+                var angleToTarget = math.acos(math.dot(forwardDirection, directionToTarget) / (math.length(directionToTarget) * math.length(forwardDirection)));
+
+                if(angleToTarget <= math.radians(5) && math.length(directionToTarget) <= 100.0f)
                 {
-                    var bullet = EntityManager.Instantiate(shipData.bulletPrefab);
-                    EntityManager.SetComponentData(bullet, new Translation { Value = position.Value + math.mul(rotation.Value, gunLocation)});
-                    EntityManager.SetComponentData(bullet, new Rotation { Value = rotation.Value });
-                    EntityManager.SetComponentData(bullet, new LifetimeData { lifeLeft = 1.0f });
+                    foreach (var gunLocation in gunLocations)
+                    {
+                        var bullet = EntityManager.Instantiate(shipData.bulletPrefab);
+                        EntityManager.SetComponentData(bullet, new Translation { Value = position.Value + math.mul(rotation.Value, gunLocation) });
+                        EntityManager.SetComponentData(bullet, new Rotation { Value = rotation.Value });
+                        EntityManager.SetComponentData(bullet, new LifetimeData { lifeLeft = 1.0f });
+                    }
                 }
             })
             .Run();
