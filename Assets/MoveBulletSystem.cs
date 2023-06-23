@@ -17,6 +17,20 @@ public class MoveBulletSystem : JobComponentSystem
                })
                .Schedule(inputDeps);
 
+        jobHandle.Complete();
+
+        Entities.WithoutBurst().WithStructuralChanges()
+            .ForEach((Entity entity, ref Translation position, ref Rotation rotation, ref BulletData bulletData, ref LifetimeData lifetime) =>
+            {
+                var distanceToPlanet = math.length(GameDataManager.instance.wps[bulletData.waypoint] - position.Value);
+                if(distanceToPlanet < 25)
+                {
+                    lifetime.lifeLeft = 0;
+                }
+            })
+            .Run();
+
+
         return jobHandle;
     }
 }

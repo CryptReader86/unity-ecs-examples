@@ -3,4 +3,5 @@
 [GenerateAuthoringComponent]
 public struct BulletData : IComponentData
 {
+    public int waypoint;
 }
