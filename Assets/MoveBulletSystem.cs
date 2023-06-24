@@ -26,6 +26,11 @@ public class MoveBulletSystem : JobComponentSystem
                 if(distanceToPlanet < 25)
                 {
                     lifetime.lifeLeft = 0;
+
+                    var explosion = EntityManager.Instantiate(bulletData.explosionPrefab);
+                    EntityManager.SetComponentData(explosion, new Translation { Value = position.Value });
+                    EntityManager.SetComponentData(explosion, new Rotation { Value = rotation.Value });
+                    EntityManager.SetComponentData(explosion, new LifetimeData { lifeLeft = 1.0f });
                 }
             })
             .Run();

@@ -4,4 +4,5 @@
 public struct BulletData : IComponentData
 {
     public int waypoint;
+    public Entity explosionPrefab;
 }

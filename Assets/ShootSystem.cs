@@ -26,7 +26,7 @@ public class ShootSystem : JobComponentSystem
                         EntityManager.SetComponentData(bullet, new Translation { Value = position.Value + math.mul(rotation.Value, gunLocation) });
                         EntityManager.SetComponentData(bullet, new Rotation { Value = rotation.Value });
                         EntityManager.SetComponentData(bullet, new LifetimeData { lifeLeft = 1.0f });
-                        EntityManager.SetComponentData(bullet, new BulletData { waypoint = shipData.currentWP });
+                        EntityManager.SetComponentData(bullet, new BulletData { waypoint = shipData.currentWP, explosionPrefab = shipData.explosionPrefab });
                     }
                 }
             })
