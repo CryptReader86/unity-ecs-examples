@@ -60,6 +60,18 @@ public class ECSManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameDataManager.scale1 != _scale1) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.scale2 != _scale2) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.scale3 != _scale3) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.strength1 != _strength1) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.strength2 != _strength2) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.strength3 != _strength3) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.sandLevel != _sandLevel) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.dirtLevel != _dirtLevel) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.grassLevel != _grassLevel) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.rockLevel != _rockLevel) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.snowLevel != _snowLevel) GameDataManager.wasDataChanged = true;
+
         GameDataManager.scale1 = _scale1;
         GameDataManager.scale2 = _scale2;
         GameDataManager.scale3 = _scale3;

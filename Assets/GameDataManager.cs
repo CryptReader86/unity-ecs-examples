@@ -20,4 +20,6 @@ public static class GameDataManager
     public static float grassLevel = 6;
     public static float rockLevel = 8;
     public static float snowLevel = 10;
+
+    public static bool wasDataChanged = false;
 }

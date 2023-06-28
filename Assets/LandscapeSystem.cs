@@ -42,41 +42,46 @@ public class LandscapeSystem : JobComponentSystem
 
         jobHandle.Complete();
 
-        using (var blocks = _blockQuery.ToEntityArray(Allocator.TempJob))
+        if(GameDataManager.wasDataChanged)
         {
-            foreach (var block in blocks)
+            using (var blocks = _blockQuery.ToEntityArray(Allocator.TempJob))
             {
-                var height = EntityManager.GetComponentData<Translation>(block).Value.y;
+                foreach (var block in blocks)
+                {
+                    var height = EntityManager.GetComponentData<Translation>(block).Value.y;
 
-                var textureBlock = GameDataManager.dirt;
-                if(height <= GameDataManager.sandLevel)
-                {
-                    textureBlock = GameDataManager.sand;
-                }
-                else if (height <= GameDataManager.dirtLevel)
-                {
-                    textureBlock = GameDataManager.dirt;
-                }
-                else if (height <= GameDataManager.grassLevel)
-                {
-                    textureBlock = GameDataManager.grass;
-                }
-                else if (height <= GameDataManager.rockLevel)
-                {
-                    textureBlock = GameDataManager.rock;
-                }
-                else
-                {
-                    textureBlock = GameDataManager.snow;
-                }
+                    var textureBlock = GameDataManager.dirt;
+                    if (height <= GameDataManager.sandLevel)
+                    {
+                        textureBlock = GameDataManager.sand;
+                    }
+                    else if (height <= GameDataManager.dirtLevel)
+                    {
+                        textureBlock = GameDataManager.dirt;
+                    }
+                    else if (height <= GameDataManager.grassLevel)
+                    {
+                        textureBlock = GameDataManager.grass;
+                    }
+                    else if (height <= GameDataManager.rockLevel)
+                    {
+                        textureBlock = GameDataManager.rock;
+                    }
+                    else
+                    {
+                        textureBlock = GameDataManager.snow;
+                    }
 
-                var textureBlockRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(textureBlock);
-                var blockRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(block);
+                    var textureBlockRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(textureBlock);
+                    var blockRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(block);
 
-                blockRenderMesh = textureBlockRenderMesh;
+                    blockRenderMesh = textureBlockRenderMesh;
 
-                EntityManager.SetSharedComponentData(block, blockRenderMesh);
+                    EntityManager.SetSharedComponentData(block, blockRenderMesh);
+                }
             }
+
+            GameDataManager.wasDataChanged = false;
         }
 
         return inputDeps;

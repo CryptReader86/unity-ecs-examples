@@ -197,8 +197,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088311304}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.41300386, y: 0.37791857, z: -0.19374591, w: -0.80564755}
+  m_LocalPosition: {x: 93.66055, y: 103.78072, z: -75.47398}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -243,6 +243,17 @@ MonoBehaviour:
     type: 3}
   _snowPrefab: {fileID: 3401383963882337696, guid: 40ee0668f913b48aba8277fd770bc5ed,
     type: 3}
+  _strength1: 1
+  _strength2: 1
+  _strength3: 1
+  _scale1: 0.1
+  _scale2: 0.1
+  _scale3: 0.1
+  _sandLevel: 2
+  _dirtLevel: 4
+  _grassLevel: 6
+  _rockLevel: 8
+  _snowLevel: 10
 --- !u!4 &1249117396
 Transform:
   m_ObjectHideFlags: 0
