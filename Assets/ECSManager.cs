@@ -11,6 +11,11 @@ public class ECSManager : MonoBehaviour
     [SerializeField] private GameObject _rockPrefab;
     [SerializeField] private GameObject _snowPrefab;
 
+    [Range(0.1f, 10.0f)]
+    [SerializeField] private float _strength = 1.0f;
+    [Range(0.01f, 1.0f)]
+    [SerializeField] private float _scale = 0.1f;
+
     private const int WorldHalfSize = 75;
 
     private void Start()
@@ -28,5 +33,11 @@ public class ECSManager : MonoBehaviour
                 entityManager.SetComponentData(entity, new Translation { Value = position });
             }
         }
+    }
+
+    private void Update()
+    {
+        GameDataManager.scale = _scale;
+        GameDataManager.strength = _strength;
     }
 }
