@@ -12,9 +12,17 @@ public class ECSManager : MonoBehaviour
     [SerializeField] private GameObject _snowPrefab;
 
     [Range(0.1f, 10.0f)]
-    [SerializeField] private float _strength = 1.0f;
+    [SerializeField] private float _strength1 = 1.0f;
+    [Range(0.1f, 10.0f)]
+    [SerializeField] private float _strength2 = 1.0f;
+    [Range(0.1f, 10.0f)]
+    [SerializeField] private float _strength3 = 1.0f;
     [Range(0.01f, 1.0f)]
-    [SerializeField] private float _scale = 0.1f;
+    [SerializeField] private float _scale1 = 0.1f;
+    [Range(0.01f, 1.0f)]
+    [SerializeField] private float _scale2 = 0.1f;
+    [Range(0.01f, 1.0f)]
+    [SerializeField] private float _scale3 = 0.1f;
 
     private const int WorldHalfSize = 75;
 
@@ -37,7 +45,11 @@ public class ECSManager : MonoBehaviour
 
     private void Update()
     {
-        GameDataManager.scale = _scale;
-        GameDataManager.strength = _strength;
+        GameDataManager.scale1 = _scale1;
+        GameDataManager.scale2 = _scale2;
+        GameDataManager.scale3 = _scale3;
+        GameDataManager.strength1 = _strength1;
+        GameDataManager.strength2 = _strength2;
+        GameDataManager.strength3 = _strength3;
     }
 }
