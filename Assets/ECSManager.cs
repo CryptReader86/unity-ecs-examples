@@ -5,6 +5,8 @@ using Unity.Transforms;
 
 public class ECSManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _player;
+
     [SerializeField] private GameObject _sandPrefab;
     [SerializeField] private GameObject _dirtPrefab;
     [SerializeField] private GameObject _grassPrefab;
@@ -54,6 +56,7 @@ public class ECSManager : MonoBehaviour
                 var position = new float3(x, 0, z);
                 var entity = entityManager.Instantiate(GameDataManager.sand);
                 entityManager.SetComponentData(entity, new Translation { Value = position });
+                entityManager.SetComponentData(entity, new BlockData { initialPosition = position });
             }
         }
     }
@@ -71,6 +74,9 @@ public class ECSManager : MonoBehaviour
         else if (GameDataManager.grassLevel != _grassLevel) GameDataManager.wasDataChanged = true;
         else if (GameDataManager.rockLevel != _rockLevel) GameDataManager.wasDataChanged = true;
         else if (GameDataManager.snowLevel != _snowLevel) GameDataManager.wasDataChanged = true;
+        else if (GameDataManager.playerPosition != _player.transform.position) GameDataManager.wasDataChanged = true;
+
+        GameDataManager.playerPosition = _player.transform.position;
 
         GameDataManager.scale1 = _scale1;
         GameDataManager.scale2 = _scale2;

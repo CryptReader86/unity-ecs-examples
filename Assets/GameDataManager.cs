@@ -1,7 +1,10 @@
-﻿using Unity.Entities;
+﻿using UnityEngine;
+using Unity.Entities;
 
 public static class GameDataManager
 {
+    public static Vector3 playerPosition;
+
     public static float scale1;
     public static float scale2;
     public static float scale3;

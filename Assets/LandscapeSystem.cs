@@ -26,17 +26,21 @@ public class LandscapeSystem : JobComponentSystem
         var strength2 = GameDataManager.strength2;
         var strength3 = GameDataManager.strength3;
 
+        var offset = GameDataManager.playerPosition;
+
         var jobHandle = Entities
             .WithName("LandscapeSystem")
             .ForEach((ref Translation position, ref BlockData blockData) =>
             {
-                var perlin1 = Mathf.PerlinNoise(position.Value.x * scale1, position.Value.z * scale1) * strength1;
-                var perlin2 = Mathf.PerlinNoise(position.Value.x * scale2, position.Value.z * scale2) * strength2;
-                var perlin3 = Mathf.PerlinNoise(position.Value.x * scale3, position.Value.z * scale3) * strength3;
+                var vertex = blockData.initialPosition + new float3(offset);
+
+                var perlin1 = Mathf.PerlinNoise(vertex.x * scale1, vertex.z * scale1) * strength1;
+                var perlin2 = Mathf.PerlinNoise(vertex.x * scale2, vertex.z * scale2) * strength2;
+                var perlin3 = Mathf.PerlinNoise(vertex.x * scale3, vertex.z * scale3) * strength3;
 
                 var height = perlin1 + perlin2 + perlin3;
 
-                position.Value = new Vector3(position.Value.x, height, position.Value.z);
+                position.Value = new Vector3(vertex.x, height, vertex.z);
             })
             .Schedule(inputDeps);
 
