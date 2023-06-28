@@ -24,20 +24,35 @@ public class ECSManager : MonoBehaviour
     [Range(0.01f, 1.0f)]
     [SerializeField] private float _scale3 = 0.1f;
 
+    [Range(0f, 100f)]
+    [SerializeField] private float _sandLevel = 2;
+    [Range(0f, 100f)]
+    [SerializeField] private float _dirtLevel = 4;
+    [Range(0f, 100f)]
+    [SerializeField] private float _grassLevel = 6;
+    [Range(0f, 100f)]
+    [SerializeField] private float _rockLevel = 8;
+    [Range(0f, 100f)]
+    [SerializeField] private float _snowLevel = 10;
+
     private const int WorldHalfSize = 75;
 
     private void Start()
     {
         var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, null);
-        var prefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(_sandPrefab, settings);
+        GameDataManager.sand = GameObjectConversionUtility.ConvertGameObjectHierarchy(_sandPrefab, settings);
+        GameDataManager.dirt = GameObjectConversionUtility.ConvertGameObjectHierarchy(_dirtPrefab, settings);
+        GameDataManager.grass = GameObjectConversionUtility.ConvertGameObjectHierarchy(_grassPrefab, settings);
+        GameDataManager.rock = GameObjectConversionUtility.ConvertGameObjectHierarchy(_rockPrefab, settings);
+        GameDataManager.snow = GameObjectConversionUtility.ConvertGameObjectHierarchy(_snowPrefab, settings);
 
         for (var z = -WorldHalfSize; z <= WorldHalfSize; z++)
         {
             for (var x = -WorldHalfSize; x <= WorldHalfSize; x++)
             {
                 var position = new float3(x, 0, z);
-                var entity = entityManager.Instantiate(prefab);
+                var entity = entityManager.Instantiate(GameDataManager.sand);
                 entityManager.SetComponentData(entity, new Translation { Value = position });
             }
         }
@@ -51,5 +66,11 @@ public class ECSManager : MonoBehaviour
         GameDataManager.strength1 = _strength1;
         GameDataManager.strength2 = _strength2;
         GameDataManager.strength3 = _strength3;
+
+        GameDataManager.sandLevel = _sandLevel;
+        GameDataManager.dirtLevel = _dirtLevel;
+        GameDataManager.grassLevel = _grassLevel;
+        GameDataManager.rockLevel = _rockLevel;
+        GameDataManager.snowLevel = _snowLevel;
     }
 }

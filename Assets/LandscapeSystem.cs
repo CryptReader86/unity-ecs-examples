@@ -8,6 +8,15 @@ using UnityEngine;
 
 public class LandscapeSystem : JobComponentSystem
 {
+    private EntityQuery _blockQuery;
+
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+
+        _blockQuery = GetEntityQuery(typeof(BlockData));
+    }
+
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         var scale1 = GameDataManager.scale1;
@@ -32,6 +41,43 @@ public class LandscapeSystem : JobComponentSystem
             .Schedule(inputDeps);
 
         jobHandle.Complete();
+
+        using (var blocks = _blockQuery.ToEntityArray(Allocator.TempJob))
+        {
+            foreach (var block in blocks)
+            {
+                var height = EntityManager.GetComponentData<Translation>(block).Value.y;
+
+                var textureBlock = GameDataManager.dirt;
+                if(height <= GameDataManager.sandLevel)
+                {
+                    textureBlock = GameDataManager.sand;
+                }
+                else if (height <= GameDataManager.dirtLevel)
+                {
+                    textureBlock = GameDataManager.dirt;
+                }
+                else if (height <= GameDataManager.grassLevel)
+                {
+                    textureBlock = GameDataManager.grass;
+                }
+                else if (height <= GameDataManager.rockLevel)
+                {
+                    textureBlock = GameDataManager.rock;
+                }
+                else
+                {
+                    textureBlock = GameDataManager.snow;
+                }
+
+                var textureBlockRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(textureBlock);
+                var blockRenderMesh = EntityManager.GetSharedComponentData<RenderMesh>(block);
+
+                blockRenderMesh = textureBlockRenderMesh;
+
+                EntityManager.SetSharedComponentData(block, blockRenderMesh);
+            }
+        }
 
         return inputDeps;
     }
