@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using Unity.Entities;
 
 public static class GameDataManager
@@ -26,3 +27,4 @@ public static class GameDataManager
 
     public static bool wasDataChanged = false;
 }
+*/

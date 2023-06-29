@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -92,3 +93,4 @@ public class ECSManager : MonoBehaviour
         GameDataManager.snowLevel = _snowLevel;
     }
 }
+*/
