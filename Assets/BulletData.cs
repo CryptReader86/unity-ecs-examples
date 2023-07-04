@@ -1,8 +1,7 @@
 ﻿using Unity.Entities;
 
 [GenerateAuthoringComponent]
-public struct CharacterData : IComponentData
+public struct BulletData : IComponentData
 {
     public float speed;
-    public Entity bulletPrefab;
 }
