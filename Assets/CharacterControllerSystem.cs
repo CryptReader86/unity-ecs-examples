@@ -12,6 +12,7 @@ public class CharacterControllerSystem : JobComponentSystem
         var deltaTime = Time.DeltaTime;
         var inputY = Input.GetAxis("Horizontal");
         var inputZ = Input.GetAxis("Vertical");
+        var shooting = Input.GetAxis("Fire1");
 
         var jobHandle = Entities
             .WithName("CharacterControllerSystem")
@@ -27,6 +28,22 @@ public class CharacterControllerSystem : JobComponentSystem
             .Schedule(inputDeps);
 
         jobHandle.Complete();
+
+        Entities.WithoutBurst().WithStructuralChanges()
+            .WithName("ShootControllerSystem")
+            .ForEach((ref PhysicsVelocity physicsVelocity, ref Translation position, ref Rotation rotation, ref CharacterData characterData) =>
+            {
+                if(shooting > 0)
+                {
+                    var bullet = EntityManager.Instantiate(characterData.bulletPrefab);
+
+                    var bulletPositionOffset = new float3(UnityEngine.Random.Range(-1, 2), 1, 1);
+
+                    EntityManager.SetComponentData(bullet, new Translation { Value = position.Value + math.mul(rotation.Value, bulletPositionOffset) });
+                    EntityManager.SetComponentData(bullet, new Rotation { Value = rotation.Value });
+                }
+            })
+            .Run();
 
         return inputDeps;
     }
