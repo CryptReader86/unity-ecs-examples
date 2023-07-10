@@ -41,6 +41,11 @@ public class CharacterControllerSystem : JobComponentSystem
 
                     EntityManager.SetComponentData(bullet, new Translation { Value = position.Value + math.mul(rotation.Value, bulletPositionOffset) });
                     EntityManager.SetComponentData(bullet, new Rotation { Value = rotation.Value });
+
+                    var speed = UnityEngine.Random.Range(20, 150);
+                    var collisionEffect = new float3(UnityEngine.Random.Range(-500, 500), UnityEngine.Random.Range(-500, 500), UnityEngine.Random.Range(-500, 500));
+
+                    EntityManager.SetComponentData(bullet, new BulletData { speed = speed, collisionEffect = collisionEffect });
                 }
             })
             .Run();

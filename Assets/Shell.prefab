@@ -218,6 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 500
+  collisionEffect:
+    x: 0
+    y: 1000
+    z: 0
 --- !u!114 &8259557076495440072
 MonoBehaviour:
   m_ObjectHideFlags: 0

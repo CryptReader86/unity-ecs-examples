@@ -28,13 +28,13 @@ public class BulletCollisionEventSystem : JobComponentSystem
             if(isTargetA && isBulletB)
             {
                 var targetVelocity = PhysicsVelocityGroup[entityA];
-                targetVelocity.Linear = new float3(0, 1000, 0);
+                targetVelocity.Linear = BulletGroup[entityB].collisionEffect;
                 PhysicsVelocityGroup[entityA] = targetVelocity;
             }
             else if (isTargetB && isBulletA)
             {
                 var targetVelocity = PhysicsVelocityGroup[entityB];
-                targetVelocity.Linear = new float3(0, 1000, 0);
+                targetVelocity.Linear = BulletGroup[entityA].collisionEffect;
                 PhysicsVelocityGroup[entityB] = targetVelocity;
             }
         }
