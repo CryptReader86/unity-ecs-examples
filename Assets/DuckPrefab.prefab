@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8853910131820347836}
   - component: {fileID: 797354753}
   - component: {fileID: 797354754}
+  - component: {fileID: 1927053371437651408}
   m_Layer: 0
   m_Name: DuckPrefab
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: -3858940800246864737, guid: 82c1697593b83490ab670e57a08c9a14,
     type: 3}
+  m_ForceUnique: 0
   m_Material:
     m_SupportsTemplate: 1
     m_Template: {fileID: 0}
@@ -203,3 +205,15 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
+--- !u!114 &1927053371437651408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990170793689089784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56165d326b27d734383802124ed8dd0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

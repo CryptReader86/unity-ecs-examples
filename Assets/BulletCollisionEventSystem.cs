@@ -12,30 +12,30 @@ public class BulletCollisionEventSystem : JobComponentSystem
     {
         [ReadOnly]
         public ComponentDataFromEntity<BulletData> BulletGroup;
-        public ComponentDataFromEntity<PhysicsVelocity> PhysicsVelocityGroup;
+        public ComponentDataFromEntity<DestroyNowData> DestroyNowGroup;
 
         public void Execute(CollisionEvent collisionEvent)
         {
             var entityA = collisionEvent.Entities.EntityA;
             var entityB = collisionEvent.Entities.EntityB;
 
-            var isTargetA = PhysicsVelocityGroup.Exists(entityA);
-            var isTargetB = PhysicsVelocityGroup.Exists(entityB);
+            var isTargetA = DestroyNowGroup.Exists(entityA);
+            var isTargetB = DestroyNowGroup.Exists(entityB);
 
             var isBulletA = BulletGroup.Exists(entityA);
             var isBulletB = BulletGroup.Exists(entityB);
 
             if(isTargetA && isBulletB)
             {
-                var targetVelocity = PhysicsVelocityGroup[entityA];
-                targetVelocity.Linear = BulletGroup[entityB].collisionEffect;
-                PhysicsVelocityGroup[entityA] = targetVelocity;
+                var destroyNowData = DestroyNowGroup[entityA];
+                destroyNowData.shouldDestroy = true;
+                DestroyNowGroup[entityA] = destroyNowData;
             }
             else if (isTargetB && isBulletA)
             {
-                var targetVelocity = PhysicsVelocityGroup[entityB];
-                targetVelocity.Linear = BulletGroup[entityA].collisionEffect;
-                PhysicsVelocityGroup[entityB] = targetVelocity;
+                var destroyNowData = DestroyNowGroup[entityB];
+                destroyNowData.shouldDestroy = true;
+                DestroyNowGroup[entityB] = destroyNowData;
             }
         }
     }
@@ -44,7 +44,6 @@ public class BulletCollisionEventSystem : JobComponentSystem
     private StepPhysicsWorld _stepPhysicsWorld;
 
     protected override void OnCreate()
-
     {
         _buildPhysicsWorld = World.GetOrCreateSystem<BuildPhysicsWorld>();
         _stepPhysicsWorld = World.GetOrCreateSystem<StepPhysicsWorld>();
@@ -55,7 +54,7 @@ public class BulletCollisionEventSystem : JobComponentSystem
         var jobHandle = new CollisionEventJob
         {
             BulletGroup = GetComponentDataFromEntity<BulletData>(),
-            PhysicsVelocityGroup = GetComponentDataFromEntity<PhysicsVelocity>()
+            DestroyNowGroup = GetComponentDataFromEntity<DestroyNowData>()
         }.Schedule(_stepPhysicsWorld.Simulation, ref _buildPhysicsWorld.PhysicsWorld, inputDeps);
 
         jobHandle.Complete();
