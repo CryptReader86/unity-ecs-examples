@@ -8,6 +8,8 @@ public class ECSManager : MonoBehaviour
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private GameObject _bulletPrefab;
 
+    [SerializeField] private EntityTracker _entityTracker;
+
     private BlobAssetStore _blobAssetStore;
 
     void Start()
@@ -23,6 +25,8 @@ public class ECSManager : MonoBehaviour
         var playerEntity = entityManager.Instantiate(player);
         entityManager.SetComponentData(playerEntity, new Translation { Value = new float3(0, 1.5f, 0) });
         entityManager.SetComponentData(playerEntity, new CharacterData { speed = 100, bulletPrefab = bullet });
+
+        _entityTracker.EntityToTrack = playerEntity;
     }
 
     private void OnDestroy()
